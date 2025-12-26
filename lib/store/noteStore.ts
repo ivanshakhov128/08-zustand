@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import type { NoteTag } from "@/types/note";
 
 export interface DraftNote {
   title: string;
   content: string;
-  tag: string;
+  tag: NoteTag;
 }
 
 export const initialDraft: DraftNote = {
@@ -23,10 +24,12 @@ export const useNoteStore = create<NoteStore>()(
   persist(
     (set) => ({
       draft: initialDraft,
+
       setDraft: (note) =>
         set((state) => ({
           draft: { ...state.draft, ...note },
         })),
+
       clearDraft: () => set({ draft: initialDraft }),
     }),
     {
