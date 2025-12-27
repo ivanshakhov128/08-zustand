@@ -5,17 +5,21 @@ import {
 } from "@tanstack/react-query";
 import NotesClient from "./Notes.client";
 import { fetchNotes } from "@/lib/api";
+import type { Metadata } from "next";
 
 interface FilterProps {
-  params: Promise<{ slug: string[] }>; // params теперь промис
+  params: Promise<{ slug: string[] }>;
 }
 
-export async function generateMetadata({ params }: FilterProps) {
-  const { slug } = await params; // unwrap params
+export async function generateMetadata({
+  params,
+}: FilterProps): Promise<Metadata> {
+  const { slug } = await params;
   const tag = slug?.[0] ?? "all";
 
   const pageTitle =
     tag === "all" ? "All notes | NoteHub" : `${tag} notes | NoteHub`;
+
   const description =
     tag === "all"
       ? "Browse all notes in NoteHub"
@@ -28,13 +32,20 @@ export async function generateMetadata({ params }: FilterProps) {
       title: pageTitle,
       description,
       url: `https://your-domain.com/notes/filter/${tag}`,
-      images: ["https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"],
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+          width: 1200,
+          height: 630,
+          alt: "NoteHub OG Image",
+        },
+      ],
     },
   };
 }
 
 export default async function FilteredNotesPage({ params }: FilterProps) {
-  const { slug } = await params; // разворачиваем промис
+  const { slug } = await params;
   const tag = slug?.[0] ?? "all";
   const normalizedTag = tag === "all" ? "" : tag;
 

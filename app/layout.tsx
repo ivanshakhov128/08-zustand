@@ -3,6 +3,7 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import TanStackProvider from "../components/TanStackProvider/TanStackProvider";
 import { Roboto } from "next/font/google";
+import type { Metadata } from "next";
 
 const roboto = Roboto({
   weight: ["400", "500", "700"],
@@ -11,7 +12,7 @@ const roboto = Roboto({
   display: "swap",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "NoteHub — Smart notes",
   description:
     "NoteHub — створюй, редагуй та керуй нотатками ефективно. Пошук, фільтри, теги та збереження чернеток.",
